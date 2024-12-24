@@ -12,35 +12,35 @@ pipeline {
         stage('building code using mvn') {
             steps {
                echo 'Maven triggered, build going on'
-               bat 'mvn clean install'
+               sh 'mvn clean install'
             }
         }
             
         stage('test code using Surefire') {
             steps {
                echo 'testing code'
-               bat 'mvn test'
+               sh 'mvn test'
             }
         }
         
         stage('verify Dockerfile') {
             steps {
                 echo 'Verifying Dockerfile presence'
-                bat 'dir'
+                sh 'dir'
             }
         }
         
         stage('build Docker image') {
             steps {
                 echo 'build Docker image'
-                 bat 'docker build -t myapp1:latest .'
+                 sh 'docker build -t myapp1:latest .'
             }
         }
         
         stage('Deployment using docker') {
             steps {
                 echo 'deploying'
-                 bat 'docker run -d -p 9090:8080 --name myapp_container myapp1:latest'
+                 sh 'docker run -d -p 9090:8080 --name myapp_container myapp1:latest'
             }
         }
     }
